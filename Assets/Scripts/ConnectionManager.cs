@@ -15,6 +15,6 @@ public class ConnectionManager : MonoBehaviourPunCallbacks
 
     public override void OnConnectedToMaster()
     {
-        SceneManager.LoadScene("Game");
+        SceneManager.LoadScene("Lobby");
     }
 }
