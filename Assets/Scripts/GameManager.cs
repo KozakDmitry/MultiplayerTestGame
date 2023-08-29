@@ -10,8 +10,6 @@ public class GameManager : MonoBehaviourPunCallbacks
     private GameObject player;
     [SerializeField]
     private float minX, minY, maxX, maxY;
-    private int countOfPlayers=0;
-    private bool gameStart=false;
     void Start()
     {
         Vector2 spawnPos = new Vector2(Random.Range(minX,maxX),Random.Range(minY,maxY));

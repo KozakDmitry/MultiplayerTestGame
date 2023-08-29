@@ -20,6 +20,6 @@ public class ObjectSpawnManager : MonoBehaviour, IStart
 
     public void StopGame()
     {
-
+        CancelInvoke(nameof(SpawnCoins));
     }
 }

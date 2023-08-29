@@ -7,12 +7,12 @@ public class Bullet : MonoBehaviour
 {
     [SerializeField] private float speed = 10f;
     [SerializeField] int damage = 4;
-    private Rigidbody rb;
+    private Rigidbody2D rb;
 
     private void Awake()
     {
-        rb = GetComponent<Rigidbody>();
-        rb.velocity = transform.forward * speed;
+        rb = GetComponent<Rigidbody2D>();
+        rb.velocity = transform.right * speed;
     }
     void Start()
     {  
