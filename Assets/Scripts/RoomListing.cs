@@ -13,8 +13,7 @@ public class RoomListing : MonoBehaviour
     {
        
         text.text = roomInfo.MaxPlayers + ", " + roomInfo.Name;
-     
-     
+
     }
  
 }

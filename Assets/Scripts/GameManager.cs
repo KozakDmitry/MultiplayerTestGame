@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         Vector2 spawnPos = new Vector2(Random.Range(minX,maxX),Random.Range(minY,maxY));
         PhotonNetwork.Instantiate(player.name, spawnPos, Quaternion.identity);
     }
-
+  
     public override void OnConnectedToMaster()
     {
         GameHelper.CheckConnectedPeople();

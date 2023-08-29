@@ -18,6 +18,12 @@ public static class GameHelper
         GameReady += iStart.StartGame;
     }
 
+    public static void EndGame()
+    {
+        
+    }
+
+
     public static bool IsEnoughPeople()
     {
         return isEnoughPeople;

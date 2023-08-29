@@ -9,15 +9,22 @@ public class Player : MonoBehaviour,IStart
 {
     private PhotonView view;
     [SerializeField] private float speed;
-    private Vector2 moveInput, moveOutput;
-    private Rigidbody2D rb;
-    [SerializeField] private GameObject bullet;
-    [SerializeField] private int maxHealth;
-    private int currentHealth;
+    [SerializeField] private FixedJoystick joystickForMove, joystickForFire;
+    private Vector2 moveInput;
+    
     [SerializeField] private Slider slider;
-    private Camera cam;
-    private Vector2 mousePosition, lookDirection;
+   
+  
 
+    [SerializeField] private GameObject bulletPrefab;
+    [SerializeField] private Transform fireSpot;
+    [SerializeField] private float startSpeed;
+    [SerializeField] private int maxHealth;
+    private Rigidbody2D bulletRb;
+    private float hAxis, vAxis, zAxis;
+    private int currentHealth;
+    private Rigidbody2D rb;
+    
     public void StartGame()
     {
 
@@ -32,10 +39,11 @@ public class Player : MonoBehaviour,IStart
         GameHelper.SubscrubeGT(this.gameObject);
         view = GetComponent<PhotonView>();
         rb = GetComponent<Rigidbody2D>();
-        cam = GetComponentInChildren<Camera>();
+        slider.maxValue = maxHealth;
         currentHealth = maxHealth;
     }
-    // Start is called before the first frame update
+
+
     void Start()
     {
        
@@ -43,34 +51,48 @@ public class Player : MonoBehaviour,IStart
     public void GetDamage(int dmg)
     {
         currentHealth -= dmg;
-        slider.value = currentHealth/maxHealth;
+        slider.value = currentHealth;
         if (currentHealth <= 0)
         {
-            Destroy(bullet);
+            GameHelper.EndGame();
+            
         }
     }
 
-    void Update()
+    private void Update()
     {
         if (view.IsMine)
         {
-            if(Input.GetKeyDown(KeyCode.Mouse0))
+
+            moveInput.x = joystickForMove.Horizontal;
+            moveInput.y = joystickForMove.Vertical;
+            Debug.Log(moveInput.ToString());
+            if(joystickForFire.Direction.normalized != Vector2.zero) 
             {
-                Instantiate(bullet, transform.position, transform.rotation);
+                hAxis = joystickForFire.Horizontal;
+                vAxis = joystickForFire.Vertical;
+                zAxis = Mathf.Atan2(hAxis, vAxis) * Mathf.Rad2Deg;
+                transform.eulerAngles = new Vector3(0f, 0f, -zAxis);
+                GameObject bullet = Instantiate(bulletPrefab, fireSpot.position, fireSpot.rotation);
+                bulletRb = bullet.GetComponent<Rigidbody2D>();
+                bulletRb.AddForce(fireSpot.up * startSpeed, ForceMode2D.Impulse);
             }
-            mousePosition = cam.ScreenToWorldPoint(Input.mousePosition);
-            moveInput = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-            moveOutput = moveInput.normalized*speed*Time.deltaTime;
-            transform.position += (Vector3)moveOutput;
+            else
+            {
+                hAxis = moveInput.x;
+                vAxis = moveInput.y;
+                zAxis = Mathf.Atan2(hAxis, vAxis) * Mathf.Rad2Deg;
+                transform.eulerAngles = new Vector3(0f, 0f, -zAxis);
+            }
+            
         }
+        
     }
     private void FixedUpdate()
     {
         if (view.IsMine)
         {
-            lookDirection = mousePosition - rb.position;
-            rb.rotation =  Mathf.Atan2(lookDirection.y, lookDirection.x)*Mathf.Rad2Deg - 90f;
-           
+            rb.MovePosition(rb.position + moveInput.normalized * speed * Time.fixedDeltaTime);        
         }
     }
 }
