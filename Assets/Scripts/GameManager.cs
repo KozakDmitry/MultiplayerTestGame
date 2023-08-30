@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     private GameObject player;
     [SerializeField]
     private float minX, minY, maxX, maxY;
-    void Start()
+    void Awake()
     {
         Vector2 spawnPos = new Vector2(Random.Range(minX,maxX),Random.Range(minY,maxY));
         PhotonNetwork.Instantiate(player.name, spawnPos, Quaternion.identity);

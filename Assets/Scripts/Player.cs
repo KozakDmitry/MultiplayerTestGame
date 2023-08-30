@@ -9,7 +9,7 @@ public class Player : MonoBehaviour,IStart
 {
     private PhotonView view;
     [SerializeField] private float speed;
-    [SerializeField] private FixedJoystick joystickForMove, joystickForFire;
+    private FixedJoystick joystickForMove, joystickForFire;
     private Vector2 moveInput;
     
     [SerializeField] private Slider slider;
@@ -24,7 +24,7 @@ public class Player : MonoBehaviour,IStart
     private float hAxis, vAxis, zAxis;
     private int currentHealth;
     private Rigidbody2D rb;
-    
+    private float reloadTime = 0.4f,lastFireTime = 0.0f;
     public void StartGame()
     {
 
@@ -34,6 +34,14 @@ public class Player : MonoBehaviour,IStart
 
     }
 
+    public void SetJoystickForFire(FixedJoystick joystick)
+    {
+        joystickForFire = joystick; 
+    }
+    public void SetJoystickForMove(FixedJoystick joystick)
+    {
+        joystickForMove = joystick;
+    }
     private void Awake()
     {
         GameHelper.SubscrubeGT(this.gameObject);
@@ -58,6 +66,16 @@ public class Player : MonoBehaviour,IStart
             
         }
     }
+    private void Shoot()
+    {
+        if (Time.time - lastFireTime > reloadTime)
+        {
+            GameObject bullet = Instantiate(bulletPrefab, fireSpot.position, fireSpot.rotation);
+            bulletRb = bullet.GetComponent<Rigidbody2D>();
+            bulletRb.AddForce(fireSpot.up * startSpeed, ForceMode2D.Impulse);
+            lastFireTime = Time.time;
+        }
+    }
 
     private void Update()
     {
@@ -73,9 +91,7 @@ public class Player : MonoBehaviour,IStart
                 vAxis = joystickForFire.Vertical;
                 zAxis = Mathf.Atan2(hAxis, vAxis) * Mathf.Rad2Deg;
                 transform.eulerAngles = new Vector3(0f, 0f, -zAxis);
-                GameObject bullet = Instantiate(bulletPrefab, fireSpot.position, fireSpot.rotation);
-                bulletRb = bullet.GetComponent<Rigidbody2D>();
-                bulletRb.AddForce(fireSpot.up * startSpeed, ForceMode2D.Impulse);
+                Shoot();
             }
             else
             {
