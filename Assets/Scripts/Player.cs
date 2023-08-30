@@ -84,7 +84,6 @@ public class Player : MonoBehaviour,IStart
 
             moveInput.x = joystickForMove.Horizontal;
             moveInput.y = joystickForMove.Vertical;
-            Debug.Log(moveInput.ToString());
             if(joystickForFire.Direction.normalized != Vector2.zero) 
             {
                 hAxis = joystickForFire.Horizontal;

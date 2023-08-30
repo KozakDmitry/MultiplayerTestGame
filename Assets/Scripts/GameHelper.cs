@@ -6,8 +6,8 @@ using UnityEngine;
 public static class GameHelper 
 {
     public delegate void GameStart();
-    public static event GameStart NotEnoughtPlayers;
-    public static event GameStart GameReady;
+    public static event GameStart NotEnoughtPlayers = delegate { };
+    public static event GameStart GameReady = delegate { };
 
     private static bool isEnoughPeople = false;
 

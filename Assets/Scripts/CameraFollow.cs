@@ -1,6 +1,7 @@
 using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
@@ -20,21 +21,23 @@ public class CameraFollow : MonoBehaviour
                     player = p.transform;
                     p.GetComponent<Player>().SetJoystickForFire(joyStickForFire);
                     p.GetComponent<Player>().SetJoystickForMove(joyStickForMove);
+                    p.GetComponentInChildren<HpBar>().SetCamera(this.transform);
                 }
 
             }
         }
         if(player!= null)
         {
-            transform.position = player.position + Vector3.up * 10f;
+            transform.position = player.position + Vector3.forward * -10f;
         }
     }
 
 
     private void FixedUpdate()
     {
-        Vector3 targetPosition = player.position + Vector3.up * 10f;
+        Vector3 targetPosition = player.position + Vector3.forward * -10f;
         Vector3 smoothedPosition = Vector3.Lerp(transform.position, targetPosition, 1f);
+        transform.rotation = Quaternion.Euler(Vector3.zero);
         transform.position = smoothedPosition;
     }
 }
