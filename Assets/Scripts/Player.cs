@@ -49,6 +49,7 @@ public class Player : MonoBehaviour,IStart
         rb = GetComponent<Rigidbody2D>();
         slider.maxValue = maxHealth;
         currentHealth = maxHealth;
+        slider.value = currentHealth;
     }
 
 
