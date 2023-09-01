@@ -4,22 +4,39 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviourPunCallbacks
+public class GameManager : MonoBehaviourPunCallbacks,IStart 
 {
     [SerializeField]
     private GameObject player;
     [SerializeField]
     private float minX, minY, maxX, maxY;
+
+    public delegate void PlayerFoundEventHandler(Transform player);
+    public static event PlayerFoundEventHandler PlayerCreated = delegate { };
+
     void Awake()
     {
-        PlayerFinder.PlayerFound += PlayerUnactive;
+        
         Vector2 spawnPos = new Vector2(Random.Range(minX,maxX),Random.Range(minY,maxY));
-        PhotonNetwork.Instantiate(player.name, spawnPos, Quaternion.identity);
+        player = PhotonNetwork.Instantiate(player.name, spawnPos, Quaternion.identity);
+        if(player.GetComponent<PhotonView>().IsMine) 
+        {
+            PlayerCreated(player.transform);
+        }
+    }
+    public void StartGame()
+    {
+        player.GetComponent<Player>().enabled = true;
     }
 
-    public void PlayerUnactive(Transform player)
+    public void StopGame()
     {
-        
+        PlayerUnactive(player.transform);
+    }
+    
+    private void PlayerUnactive(Transform player)
+    {
+        player.gameObject.GetComponent<Player>().enabled = false;
     }
     public override void OnConnectedToMaster()
     {

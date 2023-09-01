@@ -1,18 +1,33 @@
 using System.Collections;
 using System.Collections.Generic;
 using Photon.Pun;
+using TMPro;
 using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
     private int coinCount=0;
+    private TextMeshProUGUI coinsNum;
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Coin"))
         {
-            coinCount++;
+            AddMoney();
+            
             Destroy(other.gameObject);
         }
+
+    }
+    private void AddMoney(int i = 0) 
+    {
+        coinCount += i;
+        coinsNum.text = coinCount.ToString();
+    }
+
+    public void SetMoneyUI(TextMeshProUGUI coinsText)
+    {
+        coinsNum = coinsText;
+        coinsNum.text = coinCount.ToString();
     }
 
 }

@@ -5,7 +5,7 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Player : MonoBehaviour,IStart
+public class Player : MonoBehaviour
 {
     private PhotonView view;
     [SerializeField] private float speed;
@@ -25,14 +25,6 @@ public class Player : MonoBehaviour,IStart
     private int currentHealth;
     private Rigidbody2D rb;
     private float reloadTime = 0.4f,lastFireTime = 0.0f;
-    public void StartGame()
-    {
-
-    }
-    public void StopGame()
-    {
-
-    }
 
     public void SetJoystickForFire(FixedJoystick joystick)
     {
@@ -44,7 +36,6 @@ public class Player : MonoBehaviour,IStart
     }
     private void Awake()
     {
-        GameHelper.SubscrubeGT(this.gameObject);
         view = GetComponent<PhotonView>();
         rb = GetComponent<Rigidbody2D>();
         slider.maxValue = maxHealth;

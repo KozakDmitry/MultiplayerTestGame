@@ -9,7 +9,7 @@ public class CameraFollow : MonoBehaviour
     private Transform player;
     private void Awake()
     {
-        PlayerFinder.PlayerFound += SetPlayer;
+        GameManager.PlayerCreated += SetPlayer;
     }
 
     public void SetPlayer(Transform player)

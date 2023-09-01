@@ -8,7 +8,7 @@ public class HpBar : MonoBehaviour
     [SerializeField] private Vector3 offset;
     private void Awake()
     {
-        PlayerFinder.PlayerFound += SetPlayer;
+        GameManager.PlayerCreated += SetPlayer;
     }
     public void SetPlayer(Transform player)
     {
