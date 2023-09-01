@@ -5,7 +5,7 @@ using UnityEngine;
 public class HpBar : MonoBehaviour
 {
     private Transform player;
-    [SerializeField] private Vector3 offset;
+    [SerializeField] private Vector3 offset = new Vector3(0,1f,0);
     private void Awake()
     {
         GameManager.PlayerCreated += SetPlayer;

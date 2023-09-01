@@ -1190,7 +1190,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 53.45
+  m_fontSize: 64.2
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1494,6 +1494,7 @@ MonoBehaviour:
   joyStickForFire: {fileID: 27229956}
   joyStickForMove: {fileID: 600564245}
   slider: {fileID: 2622124843438671557, guid: 9b2b2b14523af1e4e8e1a7426e376284, type: 3}
+  moneyText: {fileID: 1314403015}
 --- !u!1 &1859288684
 GameObject:
   m_ObjectHideFlags: 0

@@ -19,7 +19,11 @@ public class GameManager : MonoBehaviourPunCallbacks,IStart
         
         Vector2 spawnPos = new Vector2(Random.Range(minX,maxX),Random.Range(minY,maxY));
         player = PhotonNetwork.Instantiate(player.name, spawnPos, Quaternion.identity);
-        if(player.GetComponent<PhotonView>().IsMine) 
+       
+    }
+    private void Start()
+    {
+        if (player.GetComponent<PhotonView>().IsMine)
         {
             PlayerCreated(player.transform);
         }
