@@ -8,7 +8,7 @@ public class Inventory : MonoBehaviour
     private int coinCount=0;
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.name == "Coin")
+        if (other.gameObject.CompareTag("Coin"))
         {
             coinCount++;
             Destroy(other.gameObject);

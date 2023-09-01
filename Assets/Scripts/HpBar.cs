@@ -4,18 +4,22 @@ using UnityEngine;
 
 public class HpBar : MonoBehaviour
 {
-    private Transform cam;
-    
-    public void SetCamera(Transform camera)
+    private Transform player;
+    [SerializeField] private Vector3 offset;
+    private void Awake()
     {
-        cam = camera;
+        PlayerFinder.PlayerFound += SetPlayer;
+    }
+    public void SetPlayer(Transform player)
+    {
+        this.player = player;
     }
 
     private void LateUpdate()
     {
-        if (cam != null) 
+        if (player != null) 
         {
-            transform.LookAt(cam.position);
+            transform.position = player.position+offset;
         }
     }
 

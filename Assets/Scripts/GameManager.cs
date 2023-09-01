@@ -12,10 +12,15 @@ public class GameManager : MonoBehaviourPunCallbacks
     private float minX, minY, maxX, maxY;
     void Awake()
     {
+        PlayerFinder.PlayerFound += PlayerUnactive;
         Vector2 spawnPos = new Vector2(Random.Range(minX,maxX),Random.Range(minY,maxY));
         PhotonNetwork.Instantiate(player.name, spawnPos, Quaternion.identity);
     }
-  
+
+    public void PlayerUnactive(Transform player)
+    {
+        
+    }
     public override void OnConnectedToMaster()
     {
         GameHelper.CheckConnectedPeople();
