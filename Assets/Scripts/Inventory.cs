@@ -8,17 +8,19 @@ public class Inventory : MonoBehaviour
 {
     private int coinCount=0;
     private TextMeshProUGUI coinsNum;
-    private void OnTriggerEnter(Collider other)
+
+
+    private void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.CompareTag("Coin"))
         {
             AddMoney();
-            
+
             Destroy(other.gameObject);
         }
-
     }
-    private void AddMoney(int i = 0) 
+ 
+    private void AddMoney(int i = 1) 
     {
         coinCount += i;
         coinsNum.text = coinCount.ToString();

@@ -7,14 +7,15 @@ public class ObjectSpawnManager : MonoBehaviour, IStart
     [SerializeField] private GameObject coinPrefab;
     [SerializeField] private Renderer playableCollider;
     private Vector3 minPoint, maxPoint;
+    private Vector3 offset = new Vector3(0, 0, -1.5f);
     private void Start()
     {
+        GameHelper.SubscrubeGT(this.gameObject);
         maxPoint = playableCollider.bounds.max;
         minPoint = playableCollider.bounds.min;
     }
     public void StartGame()
     {
-
         InvokeRepeating(nameof(SpawnCoins), 1f, 2f);
         
     }
@@ -23,7 +24,7 @@ public class ObjectSpawnManager : MonoBehaviour, IStart
     {
         
         Vector3 availablePos = new Vector3(Random.Range(minPoint.x, maxPoint.x), Random.Range(minPoint.y, maxPoint.y), 0);
-        Instantiate(coinPrefab,availablePos,Quaternion.identity);
+        Instantiate(coinPrefab,availablePos+offset,Quaternion.identity);
     }
     
 

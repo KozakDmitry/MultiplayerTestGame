@@ -38,7 +38,7 @@ public static class GameHelper
         }
         else
         {
-            isEnoughPeople=false;
+            isEnoughPeople =false;
             NotEnoughtPlayers();
         }
     }

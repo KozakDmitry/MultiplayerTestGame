@@ -19,10 +19,11 @@ public class GameManager : MonoBehaviourPunCallbacks,IStart
         
         Vector2 spawnPos = new Vector2(Random.Range(minX,maxX),Random.Range(minY,maxY));
         player = PhotonNetwork.Instantiate(player.name, spawnPos, Quaternion.identity);
-       
+        
     }
     private void Start()
     {
+        GameHelper.CheckConnectedPeople();
         if (player.GetComponent<PhotonView>().IsMine)
         {
             PlayerCreated(player.transform);
@@ -42,11 +43,13 @@ public class GameManager : MonoBehaviourPunCallbacks,IStart
     {
         player.gameObject.GetComponent<Player>().enabled = false;
     }
-    public override void OnConnectedToMaster()
+    
+    public override void OnJoinedRoom()
     {
         GameHelper.CheckConnectedPeople();
     }
-    public override void OnDisconnected(DisconnectCause cause)
+
+    public override void OnLeftRoom()
     {
         GameHelper.CheckConnectedPeople();
     }
