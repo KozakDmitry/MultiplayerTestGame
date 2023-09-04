@@ -30,7 +30,7 @@ public static class GameHelper
     }
     public static void CheckConnectedPeople()
     {
-        if(PhotonNetwork.CountOfPlayers == PhotonNetwork.CurrentRoom.MaxPlayers) 
+        if(PhotonNetwork.CountOfPlayers == 1) 
         {
             isEnoughPeople = true;
             GameReady();   

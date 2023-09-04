@@ -11,7 +11,7 @@ public class Player : MonoBehaviour
     private FixedJoystick joystickForMove, joystickForFire;
     private Vector2 moveInput;
     
-    [SerializeField] private Slider slider;
+    private Slider slider;
    
   
 
@@ -37,8 +37,16 @@ public class Player : MonoBehaviour
     {
         view = GetComponent<PhotonView>();
         rb = GetComponent<Rigidbody2D>();
-        slider.maxValue = maxHealth;
+      
         currentHealth = maxHealth;
+       
+    }
+
+
+    public void setHpBar(Slider hpbar)
+    {
+        slider = hpbar;
+        slider.maxValue = maxHealth;
         slider.value = currentHealth;
     }
 
